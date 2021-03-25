@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-import './index.less'
-
-function header() {
-    return (
-        <div className='header'>
-            <section className="cur-part">
-                <h2>首页</h2>
-=======
 import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { fetchWeather } from '../../../../api/ajax'
@@ -65,14 +54,9 @@ function Header(props) {
                     管理员:123
                     <p onClick={() => { logout(Modal, history) }}>注销</p>
                 </div>
->>>>>>> 0beda8f (基础功能完成)
             </section>
         </div>
     )
 }
 
-<<<<<<< HEAD
-export default header
-=======
 export default Header
->>>>>>> 0beda8f (基础功能完成)
