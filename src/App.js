@@ -1,4 +1,4 @@
-import { BroswerRouter, HashRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import allPages from './pages/throwAll.js'
 
@@ -9,7 +9,7 @@ function App() {
         <Switch>
           <Route path='/login' component={allPages.login} />
           <Route path='/admin' component={allPages.admin} />
-          <Route path='/' component={allPages.login} />
+          <Redirect to='/login' />
         </Switch>
       </HashRouter>
     </div>

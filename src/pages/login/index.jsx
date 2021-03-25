@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import './index.less'
-import { Form, Input, Button, Checkbox } from 'antd';
+import { message, Form, Input, Button, Checkbox } from 'antd';
 import { useHistory } from 'react-router-dom';
 import Draggable from 'react-draggable';
+import { login } from '../../api/ajax'
 
 // 表单的样式间距配置
 const layout = {
@@ -24,16 +25,30 @@ const tailLayout = {
 // 登录界面
 function Login() {
     let history = useHistory();
+    let formRef = useRef(null);
 
-    const onFinish = () => {
-        history.push('/admin')
+    // 登录
+    const onFinish = async () => {
+        console.log('用户名和密码:', formRef.current.getFieldsValue(true));
+        let { username, password } = formRef.current.getFieldsValue(true);
+        let data = { username, password };
+        const loginRes = await login(data);
+        console.log("登录：", loginRes);
+        if (loginRes.data.code) {
+            history.replace('/admin');
+        } else if (loginRes.data.message === '密码不正确') {
+            message.error('密码不正确');
+        } else {
+            message.error('用户名不存在');
+        }
     }
 
 
 
     return (
         <div className="login">
-            <img src='assets/bg01.jpg' alt="" className="common bg" />
+            {/* <img src='assets/bg01.jpg' alt="" className="common bg" /> */}
+            <video src="assets/table.mp4" className="common bg" loop autoPlay="autoplay" muted></video>
 
             <Draggable>
                 <section className='form-field' id="form-field">
@@ -45,6 +60,7 @@ function Login() {
                     </div>
 
                     <Form
+                        ref={formRef}
                         {...layout}
                         name="basic"
                         initialValues={{
@@ -58,8 +74,9 @@ function Login() {
                             name="username"
                             rules={[
                                 {
+                                    whitespace: true,
                                     required: true,
-                                    message: 'Please input your username!',
+                                    message: '用户名不能为空',
                                 },
                             ]}
                         >
@@ -71,16 +88,13 @@ function Login() {
                             name="password"
                             rules={[
                                 {
+                                    whitespace: true,
                                     required: true,
-                                    message: 'Please input your password!',
+                                    message: '密码不能为空',
                                 },
                             ]}
                         >
                             <Input.Password />
-                        </Form.Item>
-
-                        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                            <Checkbox>Remember me</Checkbox>
                         </Form.Item>
 
                         <Form.Item {...tailLayout}>

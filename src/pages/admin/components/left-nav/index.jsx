@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import './index.less'
 
@@ -24,10 +25,12 @@ function LeftNav() {
                 <p>商品管理</p>
             </div>
 
-            <section className={curItem === 0 ? "item active" : "item"} onClick={() => handleItemClick(0)}>
-                <img src="assets/home.png" alt="" />
-                <p>首页</p>
-            </section>
+            <Link to="/admin/home">
+                <section className={curItem === 0 ? "item active" : "item"} onClick={() => handleItemClick(0)}>
+                    <img src="assets/home.png" alt="" />
+                    <p>首页</p>
+                </section>
+            </Link>
 
             <section className="item" onClick={openGoodsItems}>
                 <img src="assets/goods.png" alt="" />
@@ -35,20 +38,26 @@ function LeftNav() {
                 <img src="assets/arrow.png" alt="" style={{ position: 'absolute', right: '10px', transform: showGoodsItems ? 'rotate(180deg)' : '' }} className="arrow" />
             </section>
             <div className="goods-items" style={{ height: showGoodsItems ? '100px' : '0' }}>
-                <div className={curItem === 1 ? "sub-item active" : "sub-item"} style={{ top: showGoodsItems ? '0' : '-50px' }} onClick={() => handleItemClick(1)}>
-                    <img src="assets/goodsManage.png" alt="" />
-                    <p>商品管理</p>
-                </div>
-                <div className={curItem === 2 ? "sub-item active" : "sub-item"} style={{ top: showGoodsItems ? '50px' : '-50px' }} onClick={() => handleItemClick(2)}>
-                    <img src="assets/goodsClassification.png" alt="" />
-                    <p>分类管理</p>
-                </div>
+                <Link to="/admin/goods">
+                    <div className={curItem === 1 ? "sub-item active" : "sub-item"} style={{ top: showGoodsItems ? '0' : '-50px' }} onClick={() => handleItemClick(1)}>
+                        <img src="assets/goodsManage.png" alt="" />
+                        <p>商品管理</p>
+                    </div>
+                </Link>
+                <Link to="/admin/category">
+                    <div className={curItem === 2 ? "sub-item active" : "sub-item"} style={{ top: showGoodsItems ? '50px' : '-50px' }} onClick={() => handleItemClick(2)}>
+                        <img src="assets/goodsClassification.png" alt="" />
+                        <p>分类管理</p>
+                    </div>
+                </Link>
             </div>
 
-            <section className="item">
-                <img src="assets/classification.png" alt="" />
-                <p>分类管理</p>
-            </section>
+            <Link to="/admin/charts">
+                <section className="item">
+                    <img src="assets/classification.png" alt="" />
+                    <p>图形图表</p>
+                </section>
+            </Link>
         </div>
     )
 }
