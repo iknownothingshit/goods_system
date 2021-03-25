@@ -64,3 +64,8 @@ export const deleteGood = (data) => {
 export const modifyGood = (data) => {
     return req('/goods/modify', 'post', data);
 }
+
+// 获取所有用户
+export const getAllUsers = () => {
+    return req('/user/fetch', 'get');
+}
