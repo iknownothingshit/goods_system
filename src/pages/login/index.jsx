@@ -35,6 +35,7 @@ function Login() {
         const loginRes = await login(data);
         console.log("登录：", loginRes);
         if (loginRes.data.code) {
+            sessionStorage.setItem('user', JSON.stringify(loginRes.data.data));
             history.replace('/admin');
         } else if (loginRes.data.message === '密码不正确') {
             message.error('密码不正确');

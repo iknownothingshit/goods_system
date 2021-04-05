@@ -7,6 +7,8 @@ import { Modal } from 'antd'
 
 function Header(props) {
     let history = useHistory();
+    let userName = JSON.parse(sessionStorage.getItem('user')).admin;
+
     const { pathname } = useLocation();
 
     const [time, setTime] = useState('');// 日期
@@ -18,6 +20,7 @@ function Header(props) {
             case pathname.indexOf('home') !== -1: setTitle('首页'); break;
             case pathname.indexOf('goods') !== -1: setTitle('商品管理'); break;
             case pathname.indexOf('category') !== -1: setTitle('商品分类'); break;
+            case pathname.indexOf('authority') !== -1: setTitle('管理员权限'); break;
             case pathname.indexOf('charts') !== -1: setTitle('图形图表'); break;
             default: setTitle('首页');
         }
@@ -51,7 +54,7 @@ function Header(props) {
                     {weather}
                 </div>
                 <div className="logout">
-                    管理员:123
+                    管理员:{userName}
                     <p onClick={() => { logout(Modal, history) }}>注销</p>
                 </div>
             </section>

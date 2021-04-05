@@ -52,8 +52,15 @@ function LeftNav() {
                 </Link>
             </div>
 
+            <Link to="/admin/authority">
+                <section className={curItem === 3 ? "item active" : "item"} onClick={() => handleItemClick(3)}>
+                    <img src="assets/authority.png" alt="" />
+                    <p>管理员权限</p>
+                </section>
+            </Link>
+
             <Link to="/admin/charts">
-                <section className="item">
+                <section className={curItem === 4 ? "item active" : "item"} onClick={() => handleItemClick(4)}>
                     <img src="assets/classification.png" alt="" />
                     <p>图形图表</p>
                 </section>

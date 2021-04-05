@@ -7,8 +7,9 @@ import './index.less'
 
 // 商品管理
 function Goods() {
+    let userAuthority = JSON.parse(sessionStorage.getItem('user')).authority;
     let formRef = useRef(null);
-    const { Option } = Select;
+    const { Option, OptGroup } = Select;
 
     const [isFormVis, setIsFormVis] = useState(false);// 是否显示添加商品表单框
     const [isDetailVis, setIsDetailVis] = useState(false);// 是否显示商品详情框
@@ -80,12 +81,12 @@ function Goods() {
         </Button>
     )
 
-    const detailExtra = (
+    const detailExtra = userAuthority >= 2 ? (
         <div>
             {/* <Button type="primary" onClick={() => { setIsFormVis(true); setCurAction('修改'); }} style={{ marginRight: '10px' }}>修改</Button> */}
             <Button type="primary" onClick={() => onOffGood(curGood)}>{curGood.status ? '下架' : '上架'}</Button>
         </div>
-    )
+    ) : null;
 
     const searchBox = (
         <div>
@@ -139,8 +140,23 @@ function Goods() {
                         rules={[{ required: true, message: '此项不可为空' }]}
                     >
                         <Select placeholder="选择所属分类">
-                            <Option value="家用电器">家用电器</Option>
-                            <Option value="日常用品">日常用品</Option>
+                            <OptGroup label="手机">
+                                <Option value="华为手机">华为手机</Option>
+                                <Option value="小米手机">小米手机</Option>
+                                <Option value="OPPO手机">OPPO手机</Option>
+                                <Option value="VIVO手机">VIVO手机</Option>
+                                <Option value="苹果手机">苹果手机</Option>
+                                <Option value="三星手机">三星手机</Option>
+                            </OptGroup>
+                            <OptGroup label="电脑配件">
+                                <Option value="u盘">u盘</Option>
+                                <Option value="电脑周边">电脑周边</Option>
+                                <Option value="硬盘">硬盘</Option>
+                                <Option value="支架">支架</Option>
+                                <Option value="手写笔">手写笔</Option>
+                                <Option value="电池">电池</Option>
+                                <Option value="转接口">转接口</Option>
+                            </OptGroup>
                         </Select>
                     </Form.Item>
                     <Form.Item

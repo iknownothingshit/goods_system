@@ -7,6 +7,7 @@ import Home from './components/home'
 import Category from './components/category'
 import Goods from './components/goods'
 import Charts from './components/charts'
+import Authority from './components/authority'
 
 import { Redirect, Route, Switch } from 'react-router-dom'
 
@@ -25,12 +26,13 @@ function Admin() {
                 <Header style={{ backgroundColor: 'white' }}>
                     <HeaderBar />
                 </Header>
-                <Content style={{ backgroundColor: 'white', margin: '20px' }}>
+                <Content style={{ backgroundColor: 'white', margin: '20px', height: '60%', overflow: 'scroll' }}>
                     <Switch>
                         <Route path="/admin/home" component={Home} />
                         <Route path="/admin/category" component={Category} />
                         <Route path="/admin/goods" component={Goods} />
                         <Route path="/admin/charts" component={Charts} />
+                        <Route path="/admin/authority" component={Authority} />
                         <Redirect to="/admin/home" />
                     </Switch>
                 </Content>

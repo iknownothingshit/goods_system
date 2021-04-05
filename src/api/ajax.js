@@ -69,3 +69,8 @@ export const modifyGood = (data) => {
 export const getAllUsers = () => {
     return req('/user/fetch', 'get');
 }
+
+// 修改用户权限
+export const authorityChange = (data) => {
+    return req('/user/modify', 'post', data);
+}

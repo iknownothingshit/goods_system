@@ -81,11 +81,25 @@ export const fetchAllCategories = async (setTableData) => {
     const res = await fetchCategory();
     console.log('所有分类', res);
 
+    // 处理分类
+
+
     if (res.data.code) {
         let newTable = [];
         res.data.data.rows.forEach((e, i) => {
-            newTable.push({ key: e.category_id, name: e.category_name })
+            if (e.grade === 1) {
+                e.children = []
+                newTable.push({ key: e.category_id, name: e.category_name, children: e.children, ...e })
+            };
         })
+        res.data.data.rows.forEach((e, i) => {
+            if (e.grade === 2) {
+                newTable.forEach((item) => {
+                    if (item.category_name === e.belong) item.children.push({ key: e.category_id, name: e.category_name, ...e })
+                })
+            }
+        })
+
         setTableData(newTable);
     } else {
         message.error('获取分类失败，请检查问题后重试');
