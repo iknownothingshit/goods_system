@@ -1,13 +1,13 @@
 import { message } from 'antd'
-import { changeCategory, fetchAllGoods, uploadImg, createGood, deleteGood, modifyGood } from '../../../../api/ajax'
+import { fetchCategory, fetchAllGoods, uploadImg, createGood, deleteGood, modifyGood } from '../../../../api/ajax'
 
 let curImg = null;// 当前即将上传的图片
 let stateApi = {};// 页面所有setStateapi
 
 // 获取所有setState api
-export const getSetStateApi = (setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData) => {
+export const getSetStateApi = (setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData, setCategories) => {
     stateApi = {
-        setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData
+        setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData, setCategories
     }
 }
 
@@ -105,6 +105,34 @@ export const fetchGoods = async () => {
     } else {
         message.error('获取商品失败，请检查问题后重试');
     }
+
+    // 同时获取当前所有的分类，以便添加时选择
+    const cate_res = await fetchCategory();
+    console.log('所有分类', cate_res);
+
+    // 处理分类
+
+    if (cate_res.data.code) {
+        let newTable = [];
+        cate_res.data.data.rows.forEach((e, i) => {
+            if (e.grade === 1) {
+                e.children = []
+                newTable.push({ key: e.category_id, name: e.category_name, children: e.children, ...e })
+            };
+        })
+        cate_res.data.data.rows.forEach((e, i) => {
+            if (e.grade === 2) {
+                newTable.forEach((item) => {
+                    if (item.category_name === e.belong) item.children.push({ key: e.category_id, name: e.category_name, ...e })
+                })
+            }
+        })
+
+        stateApi.setCategories(newTable);
+    } else {
+        message.error('获取分类失败，请检查问题后重试');
+    }
+
 }
 
 // 处理图片本地上传

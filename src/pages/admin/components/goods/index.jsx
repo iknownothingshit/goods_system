@@ -18,9 +18,10 @@ function Goods() {
     const [hasImg, setHasImg] = useState(false);// 是否已上传了照片
     const [seachType, setSeachType] = useState('按名称搜索');// 搜索类型
     const [searchData, setSearchData] = useState([]);// 搜索结果
+    const [categories, setCategories] = useState([]);// 所有的分类
 
     useEffect(() => {
-        getSetStateApi(setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData);
+        getSetStateApi(setIsFormVis, setIsDetailVis, setTableData, setCurGood, setHasImg, setSearchData, setCategories);
         fetchGoods(setTableData);
     }, [])
 
@@ -140,7 +141,20 @@ function Goods() {
                         rules={[{ required: true, message: '此项不可为空' }]}
                     >
                         <Select placeholder="选择所属分类">
-                            <OptGroup label="手机">
+                            {console.log(categories)}
+                            {categories ? categories.map((e) => {
+                                return (
+                                    <OptGroup key={e.key} label={e.name}>
+                                        {e.children ? e.children.map((item) => {
+                                            return (
+                                                <Option key={item.key} value={item.name}>{item.name}</Option>
+                                            )
+                                        }) : null}
+                                    </OptGroup>
+                                )
+
+                            }) : null}
+                            {/* <OptGroup label="手机">
                                 <Option value="华为手机">华为手机</Option>
                                 <Option value="小米手机">小米手机</Option>
                                 <Option value="OPPO手机">OPPO手机</Option>
@@ -156,7 +170,7 @@ function Goods() {
                                 <Option value="手写笔">手写笔</Option>
                                 <Option value="电池">电池</Option>
                                 <Option value="转接口">转接口</Option>
-                            </OptGroup>
+                            </OptGroup> */}
                         </Select>
                     </Form.Item>
                     <Form.Item

@@ -31,9 +31,9 @@ export const search = (val, e, tableData, setCurSearchData) => {
 }
 
 // 处理点击确认事件
-export const handleOk = (curAction, keyword, setTableData, setIsActionModalVis, setKeyword) => {
+export const handleOk = (curAction, keyword, setTableData, setIsActionModalVis, setKeyword, grade, belong) => {
     switch (true) {
-        case curAction === '添加': addCategory(keyword, setTableData); break;
+        case curAction === '添加': addCategory(keyword, setTableData, grade, belong); break;
         case curAction === '删除': deleteCategory(setTableData); break;
         case curAction === '修改': modifyCategory(keyword, setTableData); break;
         default: break;
@@ -44,8 +44,8 @@ export const handleOk = (curAction, keyword, setTableData, setIsActionModalVis, 
 
 
 // 添加分类
-export const addCategory = async (keyword, setTableData) => {
-    const res = await createCategory({ name: keyword });
+export const addCategory = async (keyword, setTableData, grade, belong) => {
+    const res = await createCategory({ name: keyword, grade, belong });
     console.log("新增分类：", res);
     if (res.data.code) {
         fetchAllCategories(setTableData);
